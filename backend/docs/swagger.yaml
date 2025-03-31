@@ -1,0 +1,404 @@
+basePath: /api/v1/
+definitions:
+  controller._ResponsePostList:
+    properties:
+      code:
+        description: Business response status code
+        type: integer
+      data:
+        description: Data
+        items:
+          $ref: '#/definitions/models.ApiPostDetail'
+        type: array
+      message:
+        description: Message
+        type: string
+    type: object
+  models.ApiPostDetail:
+    properties:
+      author_id:
+        type: integer
+      author_name:
+        type: string
+      community_id:
+        type: integer
+      community_name:
+        type: string
+      content:
+        type: string
+      create_time:
+        type: string
+      introduction:
+        description: omitempty; does not display when Introduction is empty
+        type: string
+      post_id:
+        example: "0"
+        type: string
+      status:
+        type: integer
+      title:
+        type: string
+      vote_num:
+        type: integer
+    required:
+    - community_id
+    - content
+    - title
+    type: object
+host: 127.0.0.1:8081
+info:
+  contact:
+    email: support@swagger.io
+    name: author: @huchao
+    url: http://www.swagger.io/support
+  description: news_backend testing
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: news_backend
+  version: "1.0"
+paths:
+  /community:
+    get:
+      consumes:
+      - application/json
+      description: Community list
+      parameters:
+      - description: Bearer user token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - in: query
+        name: community_id
+        type: integer
+      - in: query
+        name: community_name
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controller._ResponsePostList'
+      security:
+      - ApiKeyAuth: []
+      summary: Community list
+      tags:
+      - Community business interface
+  /community/:id:
+    get:
+      consumes:
+      - application/json
+      description: Community details
+      parameters:
+      - description: Bearer user token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: id
+        in: path
+        name: communityId
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controller._ResponsePostList'
+      security:
+      - ApiKeyAuth: []
+      summary: Community details
+      tags:
+      - Community business interface
+  /login:
+    post:
+      consumes:
+      - application/json
+      description: Login business
+      parameters:
+      - description: Bearer user token
+        in: header
+        name: Authorization
+        type: string
+      - in: query
+        name: password
+        required: true
+        type: string
+      - in: query
+        name: username
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controller._ResponsePostList'
+      security:
+      - ApiKeyAuth: []
+      summary: Login business
+      tags:
+      - User business interface
+  /post:
+    post:
+      consumes:
+      - application/json
+      description: Create post
+      parameters:
+      - description: Bearer user token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - in: query
+        name: author_id
+        type: integer
+      - in: query
+        name: community_id
+        required: true
+        type: integer
+      - in: query
+        name: content
+        required: true
+        type: string
+      - example: "0"
+        in: query
+        name: post_id
+        type: string
+      - in: query
+        name: status
+        type: integer
+      - in: query
+        name: title
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controller._ResponsePostList'
+      security:
+      - ApiKeyAuth: []
+      summary: Create post
+      tags:
+      - Post related interface
+  /post/:id:
+    get:
+      consumes:
+      - application/json
+      description: Post list query interface, sorted by community, time, or score
+      parameters:
+      - description: Bearer user token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: id
+        in: path
+        name: postId
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controller._ResponsePostList'
+      security:
+      - ApiKeyAuth: []
+      summary: Upgraded post list interface
+      tags:
+      - Post related interface
+  /posts:
+    get:
+      consumes:
+      - application/json
+      description: Get paginated post list
+      parameters:
+      - description: Bearer user token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controller._ResponsePostList'
+      security:
+      - ApiKeyAuth: []
+      summary: Get paginated post list
+      tags:
+      - Post related interface
+  /posts2:
+    get:
+      consumes:
+      - application/json
+      description: Post list query interface, sorted by community, time, or score
+      parameters:
+      - description: Bearer user token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Can be empty
+        in: query
+        name: community_id
+        type: integer
+      - description: Sorting criteria
+        example: score
+        in: query
+        name: order
+        type: string
+      - description: Page number
+        in: query
+        name: page
+        type: integer
+      - description: Items per page
+        in: query
+        name: size
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controller._ResponsePostList'
+      security:
+      - ApiKeyAuth: []
+      summary: Upgraded post list interface
+      tags:
+      - Post related interface
+  /refresh_token:
+    get:
+      consumes:
+      - application/json
+      description: Refresh accessToken
+      parameters:
+      - description: Bearer user token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Can be empty
+        in: query
+        name: community_id
+        type: integer
+      - description: Sorting criteria
+        example: score
+        in: query
+        name: order
+        type: string
+      - description: Page number
+        in: query
+        name: page
+        type: integer
+      - description: Items per page
+        in: query
+        name: size
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controller._ResponsePostList'
+      security:
+      - ApiKeyAuth: []
+      summary: Refresh accessToken
+      tags:
+      - User business interface
+  /signup:
+    post:
+      consumes:
+      - application/json
+      description: Registration business
+      parameters:
+      - description: Bearer user token
+        in: header
+        name: Authorization
+        type: string
+      - description: Can be empty
+        in: query
+        name: community_id
+        type: integer
+      - description: Sorting criteria
+        example: score
+        in: query
+        name: order
+        type: string
+      - description: Page number
+        in: query
+        name: page
+        type: integer
+      - description: Items per page
+        in: query
+        name: size
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controller._ResponsePostList'
+      security:
+      - ApiKeyAuth: []
+      summary: Registration business
+      tags:
+      - User business interface
+  /vote:
+    post:
+      consumes:
+      - application/json
+      description: Vote
+      parameters:
+      - description: Bearer user token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Can be empty
+        in: query
+        name: community_id
+        type: integer
+      - description: Sorting criteria
+        example: score
+        in: query
+        name: order
+        type: string
+      - description: Page number
+        in: query
+        name: page
+        type: integer
+      - description: Items per page
+        in: query
+        name: size
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controller._ResponsePostList'
+      security:
+      - ApiKeyAuth: []
+      summary: Vote
+      tags:
+      - Voting business interface
+swagger: "2.0"

@@ -1,0 +1,27 @@
+version: "3.7"
+services:
+  redis507:
+    image: "redis:latest"  # Use the latest Redis image
+    ports:
+      - "26379:6379"  # External port 26379 mapped to internal port 6379 (Redis default)
+  
+  mysql8019:
+    image: "mysql/mysql-server:8.0"  # Use the official MySQL 8.0 image
+    ports:
+      - "33061:3306"  # External port 33061 mapped to internal port 3306 (MySQL default)
+    command: "--default-authentication-plugin=mysql_native_password --init-file /data/application/init.sql"  # Initialization command
+    environment:
+      MYSQL_ROOT_PASSWORD: "root"  # Set root password
+      MYSQL_DATABASE: "news"  # Create the news database
+      MYSQL_PASSWORD: "root"  # Set MySQL user password
+    volumes:
+      - ./init.sql:/data/application/init.sql  # Mount local init.sql to the container
+  
+  news:
+    build: .  # Build the application from the current directory
+    command: sh -c "./wait-for.sh redis507:6379 mysql8019:3306 -- ./news ./conf/config.yaml"  # Wait for Redis and MySQL to be ready before starting the app
+    depends_on:
+      - mysql8019  # Ensure MySQL is ready
+      - redis507  # Ensure Redis is ready
+    ports:
+      - "8081:8081"  # Map port 8081 to the app's port 8081
