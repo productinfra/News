@@ -77,7 +77,7 @@ export default {
   .logo {
     margin-left: 10px;
     height: 32px;
-    background: url("../assets/images/logo.png") no-repeat;
+    background: url("../assets/images/avatar.png") no-repeat;
     background-size: 32px 32px;
     background-position: left center;
     padding-left: 35px;
