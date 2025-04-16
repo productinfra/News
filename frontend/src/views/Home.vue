@@ -3,6 +3,7 @@
     <div class="content">
       <div class="left">
         <SideBar></SideBar>
+        <Geminichat></Geminichat>
       </div>
       <div class="center">
         <!-- <h4 class="c-l-title">热门帖子</h4> -->
@@ -68,10 +69,11 @@ import SideBar from '../components/SideBar.vue';
 // @ is an alias to /src
 import TimeMeter from '../components/TimeMeter.vue';
 import TrendingNewsCard from './components/TrendingNewsCard.vue';
+import Geminichat from '../components/Geminichat.vue';
 import Vue from 'vue';
 export default {
   name: "Home",
-  components: { TimeMeter, SideBar, TrendingNewsCard },
+  components: { TimeMeter, SideBar, TrendingNewsCard, Geminichat},
   data() {
     return {
       order: "time",
