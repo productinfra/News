@@ -1,9 +1,7 @@
 <template>
   <header class="header">
     <span class="logo" @click="goIndex">The News Forum</span>
-    <div class="day-of-word">
-      <DayOfWord></DayOfWord>
-    </div>
+    <div class="day-of-word"></div>
     <div class="btns">
       <div v-show="!isLogin">
         <a class="login-btn" @click="goLogin">Login</a>
@@ -20,21 +18,22 @@
 </template>
 
 <script>
-import DayOfWord from './DayOfWord.vue';
 export default {
   name: "HeadBar",
-  components:{ DayOfWord },
+
   created() {
     this.$store.commit("init");
   },
-  mounted(){
-    this.$bus.$on('pageNumber',(value) => {
+
+  mounted() {
+    this.$bus.$on('pageNumber', (value) => {
       this.pageNumber = value;
     });
-    this.$bus.$on('pageSize',(value) => {
+    this.$bus.$on('pageSize', (value) => {
       this.pageSize = value;
     });
   },
+
   computed: {
     isLogin() {
       return this.$store.getters.isLogin;
@@ -44,6 +43,7 @@ export default {
       return this.$store.getters.username;
     }
   },
+
   methods: {
     goIndex() {
       this.$router.push({ name: "Home" });
@@ -57,9 +57,17 @@ export default {
     goLogout() {
       this.$store.commit("logout");
     },
+  },
+
+  data() {
+    return {
+      pageNumber: 1,
+      pageSize: 10
+    };
   }
 };
 </script>
+
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="less">
@@ -77,7 +85,7 @@ export default {
   .logo {
     margin-left: 10px;
     height: 32px;
-    background: url("../assets/images/avatar.png") no-repeat;
+    background: url("../assets/logo.png") no-repeat;
     background-size: 32px 32px;
     background-position: left center;
     padding-left: 35px;

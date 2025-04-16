@@ -8,8 +8,9 @@ import "element-ui/lib/theme-chalk/index.css";
 import mavonEditor from "mavon-editor";
 import "mavon-editor/dist/css/index.css";
 import "github-markdown-css/github-markdown.css";
+import locale from "element-ui/lib/locale/lang/en";
 
-Vue.use(ElementUI);
+Vue.use(ElementUI, { locale });
 Vue.use(mavonEditor);
 
 Vue.prototype.Free = window.Free;
