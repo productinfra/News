@@ -31,7 +31,7 @@
         userInput: "",
         messages: [],
         loading: false,
-        apiUrl: "http://localhost:3000/chat" // ✅ 直接请求 Node.js 后端
+        apiUrl: "http://43.153.29.187:3000/chat" // ✅ 直接请求 Node.js 后端
       };
     },
     methods: {

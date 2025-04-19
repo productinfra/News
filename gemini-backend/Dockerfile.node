@@ -1,0 +1,17 @@
+# Dockerfile.node
+
+FROM node:18-alpine
+
+# 创建工作目录
+WORKDIR /app
+
+# 拷贝 package.json（如果有的话）或直接拷贝全部
+COPY server.js ./
+COPY package*.json ./
+
+# 安装依赖
+RUN npm install
+
+# 启动 Node.js 服务
+EXPOSE 3000
+CMD ["node", "server.js"]
