@@ -20,7 +20,7 @@
           <span class="textarea-num">100</span>
         </div>
         <div class="post-text-con">
-          <mavon-editor style="max-height: 600px;" v-model="content" />
+          <mavon-editor style="max-height: 600px;" v-model="content" language="en"/>
         </div>
       </div>
       <div class="post-footer">
