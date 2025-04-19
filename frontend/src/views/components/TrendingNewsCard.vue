@@ -92,7 +92,7 @@ export default {
 			return color;
 		},
 		async getnews() {
-			const url = "https://newsapi.org/v2/top-headlines?country=us&apiKey=804f6bdac084463ba3fadb53f9efce90";
+			const url = "/news";
 			let response = await this.$axios.get(url);
 			this.newsList = response.articles;
 			this.displayedList = this.newsList.slice(0,5)

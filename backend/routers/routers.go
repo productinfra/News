@@ -52,6 +52,8 @@ func SetupRouter(mode string) *gin.Engine {
 	v1.GET("/community/:id", controller.CommunityDetailHandler) // Get community details by ID
 	// Github Trending
 	v1.GET("/github_trending", controller.GithubTrendingHandler) // Github Trending
+	v1.GET("/news", controller.News)
+	v1.POST("/gemini", controller.Gemini)
 
 	// Middleware
 	v1.Use(middlewares.JWTAuthMiddleware()) // Apply JWT authentication middleware
